@@ -1,17 +1,21 @@
 package justanorg.bitbroker;
 
-import justanorg.bitbroker.market.MarketManager;
+import justanorg.bitbroker.Analyse.Analyzer;
+import justanorg.bitbroker.exchange.ExchangeManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class Broker {
     @Autowired
-    private MarketManager marketManager;
+    private ExchangeManager exchangeManager;
+    @Autowired
+    private Analyzer analyzer;
 
-    @Scheduled(fixedRate = 30000)
-    public void analyseMarketAndMakeDecision() {
+    @Scheduled(fixedRate = 60000)
+    public void analyseExchanges() {
+        analyzer.analyze(exchangeManager);
         //TODO Main loop
     }
 
